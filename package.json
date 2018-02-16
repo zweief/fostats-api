@@ -1,0 +1,9 @@
+{
+  "name": "fostats-api",
+  "version": "1.0.0",
+  "description": "american football stats api",
+  "main": "server.js",
+  "repository": "https://github.com/zweief/fostats-api.git",
+  "author": "Florian Frenzel <zweief@users.noreply.github.com>",
+  "license": "MIT"
+}
