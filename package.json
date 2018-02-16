@@ -8,6 +8,7 @@
   "license": "MIT",
   "scripts": {
     "start": "nodemon server.js",
+    "test": "mocha || true",
     "lint": "eslint ./** --cache"
   },
   "dependencies": {
