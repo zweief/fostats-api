@@ -3,3 +3,5 @@
 /test/**
 package.json
 yarn.lock
+README.md
+LICENSE
