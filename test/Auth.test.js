@@ -12,18 +12,18 @@ describe("Auth", function() {
   });
 
   describe("POST /register", function() {
-    const loginData = {
+    const registerData = {
       username: "testuser",
       email: "test@test.com",
       password: "rightpassword"
     };
 
     it("returns status code 201", async function() {
-      const response = await api.post("/register").send(loginData);
+      const response = await api.post("/register").send(registerData);
       expect(response.statusCode).to.equal(201);
     });
     it("returns user in right format", async function() {
-      const response = await api.post("/register").send(loginData);
+      const response = await api.post("/register").send(registerData);
       expect(response.body).to.have.property("user");
       expect(response.body).to.have.property("token");
       expect(response.body.status).to.equal("success");
