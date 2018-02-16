@@ -5,5 +5,14 @@
   "main": "server.js",
   "repository": "https://github.com/zweief/fostats-api.git",
   "author": "Florian Frenzel <zweief@users.noreply.github.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "scripts": {
+    "lint": "eslint ./** --cache"
+  },
+  "devDependencies": {
+    "eslint": "^4.17.0",
+    "eslint-config-prettier": "^2.9.0",
+    "eslint-plugin-prettier": "^2.6.0",
+    "prettier": "^1.10.2"
+  }
 }
