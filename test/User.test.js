@@ -67,4 +67,75 @@ describe("User", function() {
       expect(response.statusCode).to.equal(403);
     });
   });
+
+  describe("DELETE /users/:user_id", function() {
+    beforeEach(async function() {
+      const { User } = db;
+      // bulkCreate would be better but hooks arent working for hashing passwords
+      await User.create({
+        username: "testuser_1",
+        email: "test@test.com",
+        password: "rightpassword"
+      });
+      await User.create({
+        username: "testuser_2",
+        email: "example@test.com",
+        password: "rightpassword"
+      });
+    });
+
+    it("returns status code 200", async function() {
+      const token = await jwtSignUser({ id: 1 });
+
+      const response = await api
+        .delete("/users/1")
+        .send({ password: "rightpassword" })
+        .set("Authorization", `Bearer ${token}`);
+      expect(response.statusCode).to.equal(200);
+    });
+
+    it("deletes user", async function() {
+      const token = await jwtSignUser({ id: 1 });
+
+      await api
+        .delete("/users/1")
+        .send({ password: "rightpassword" })
+        .set("Authorization", `Bearer ${token}`);
+      const response = await api.get("/users");
+      expect(response.body).to.have.lengthOf(1);
+    });
+
+    it("returns right response format", async function() {
+      const token = await jwtSignUser({ id: 1 });
+
+      const response = await api
+        .delete("/users/1")
+        .send({ password: "rightpassword" })
+        .set("Authorization", `Bearer ${token}`);
+      expect(response.body).to.have.property("message");
+      expect(response.body).to.have.property("status");
+    });
+
+    it("ERROR unauthorized returns status code 403", async function() {
+      const token = await jwtSignUser({ id: 1 });
+
+      const response = await api
+        .delete("/users/1")
+        .send({ password: "wrongpassword" })
+        .set("Authorization", `Bearer ${token}`);
+      expect(response.statusCode).to.equal(403);
+    });
+
+    it("ERROR unauthorized returns right error message", async function() {
+      const token = await jwtSignUser({ id: 1 });
+
+      const response = await api
+        .delete("/users/1")
+        .send({ password: "wrongpassword" })
+        .set("Authorization", `Bearer ${token}`);
+      expect(response.body.error.message).to.equal(
+        "You are not authorized to delete this account. Please enter your password."
+      );
+    });
+  });
 });
