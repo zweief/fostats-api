@@ -14,6 +14,15 @@ function createFakeUsers(num) {
   return users;
 }
 
+function createRegisterData(username, email, password) {
+  return {
+    username,
+    email,
+    password
+  }
+}
+
 module.exports = {
-  createFakeUsers
+  createFakeUsers,
+  createRegisterData
 };

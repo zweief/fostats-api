@@ -6,18 +6,19 @@ const db = require("../models/index");
 const api = request("http://localhost:8080/api/v1");
 
 describe("Auth", function() {
+  const { sequelize, User } = db;
+
+  const registerData = {
+    username: "testuser",
+    email: "test@test.com",
+    password: "rightpassword"
+  };
+
   beforeEach(async function() {
-    const { sequelize } = db;
     await sequelize.sync({ force: true });
   });
 
   describe("POST /register", function() {
-    const registerData = {
-      username: "testuser",
-      email: "test@test.com",
-      password: "rightpassword"
-    };
-
     it("returns status code 201", async function() {
       const response = await api.post("/register").send(registerData);
       expect(response.statusCode).to.equal(201);
@@ -32,12 +33,7 @@ describe("Auth", function() {
 
   describe("POST /login", function() {
     beforeEach(async function() {
-      const { User } = db;
-      const user = await User.create({
-        username: "testuser",
-        email: "test@test.com",
-        password: "rightpassword"
-      });
+      const user = await User.create(registerData);
     });
 
     it("returns status code 200", async function() {
