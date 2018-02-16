@@ -15,5 +15,6 @@ router.post("/login", AuthenticationController.login);
 // only for development, no need to show all users in production
 router.get("/users", UserController.index);
 router.get("/users/:user_id", isAuthenticated, UserController.show);
+router.delete("/users/:user_id", isAuthenticated, UserController.destroy);
 
 module.exports = router;
