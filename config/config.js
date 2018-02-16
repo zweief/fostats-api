@@ -12,5 +12,6 @@ module.exports = {
       storage: resolve(__dirname, `../db/sqlitedatabase.sqlite`),
       logging: process.env.DB_LOGGING || false
     }
-  }
+  },
+  jwtSecret: process.env.JWT_SECRET || "secret"
 };

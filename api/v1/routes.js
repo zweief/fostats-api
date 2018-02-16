@@ -1,12 +1,11 @@
 const express = require("express");
 const router = express.Router();
 
-const { User } = require("../../models");
+const AuthenticationController = require("../../controller/AuthenticationController");
 
-router.get("/", (req, res, next) => {
-  res.status(200).json({
-    message: "hello world"
-  });
-});
+// AUTHENTICATION ROUTES
+// Only send token with id back and redirect in client to /users/:id to load users data
+router.post("/register", AuthenticationController.register);
+router.post("/login", AuthenticationController.login);
 
 module.exports = router;

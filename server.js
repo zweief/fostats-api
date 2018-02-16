@@ -9,6 +9,8 @@ const { port } = require("./config/config");
 
 const api = express();
 
+require("./passport");
+
 // Standard Middleware
 api.use(bodyParser.json());
 api.use(
