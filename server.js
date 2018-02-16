@@ -22,6 +22,24 @@ api.use(morgan("combined"));
 // Routes
 api.use("/api/v1", routesV1);
 
+// 404 Error
+api.use((req, res, next) => {
+  const err = new Error("Not Found");
+  err.status = 404;
+  err.message = "Not Found";
+  next(err);
+});
+
+// Error Handler
+api.use((err, req, res, next) => {
+  res.status(err.status || 500).json({
+    error: {
+      status: err.status || 500,
+      message: err.message || "Internal Server Error."
+    }
+  });
+});
+
 api.listen(port, () => {
   console.log(`API is listening on port ${port}...`.bgMagenta);
 });
