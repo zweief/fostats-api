@@ -29,7 +29,8 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       hooks: {
-        beforeSave: hashPassword
+        beforeCreate: hashPassword,
+        beforeUpdate: hashPassword
       }
     }
   );
@@ -45,7 +46,7 @@ module.exports = (sequelize, DataTypes) => {
     return values;
   };
 
-  User.associate = models => {};
+  // User.associate = models => {};
 
   return User;
 };
