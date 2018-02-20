@@ -19,12 +19,12 @@ passport.use(
       });
 
       if (!user) {
-        return next(err, false, { message: "info no user found" });
+        return next(err, false);
       }
 
       return next(null, user);
     } catch (err) {
-      return next(err, false, { message: "info auth error" });
+      return next(err, false);
     }
   })
 );

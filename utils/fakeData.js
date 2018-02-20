@@ -19,7 +19,7 @@ function createRegisterData(username, email, password) {
     username,
     email,
     password
-  }
+  };
 }
 
 module.exports = {
