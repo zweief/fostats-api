@@ -5,7 +5,7 @@ const cors = require("cors");
 const morgan = require("morgan");
 
 const routesV1 = require("./api/v1/routes");
-const { port } = require("./config/config");
+const { port, loggerFormat } = require("./config/config");
 
 const api = express();
 
@@ -19,7 +19,9 @@ api.use(
   })
 );
 api.use(cors());
-api.use(morgan("combined"));
+if (process.env.NODE_ENV !== "test") {
+  api.use(morgan(loggerFormat));
+}
 
 // Routes
 api.use("/api/v1", routesV1);
@@ -45,3 +47,5 @@ api.use((err, req, res, next) => {
 api.listen(port, () => {
   console.log(`API is listening on port ${port}...`.bgMagenta);
 });
+
+module.exports = api;
