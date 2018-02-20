@@ -4,15 +4,7 @@ module.exports = {
   async index(req, res, next) {
     try {
       const user = await User.findAll();
-
-      if (!user || user === []) {
-        throw new Error();
-      }
-
       const userData = user.map(user => user.stripPassword());
-      if (!userData || userData === []) {
-        throw new Error();
-      }
 
       res.status(200).json(userData);
     } catch (err) {
@@ -57,10 +49,10 @@ module.exports = {
         data.password = data.newPassword;
         delete data.newPassword;
       }
-      for (let prop in data) {
-        if (prop !== "newPassword") fields.push(prop);
-      }
 
+      for (let prop in data) {
+        fields.push(prop);
+      }
       const userUpdated = await user.update(data, {
         fields: fields,
         hooks: true
