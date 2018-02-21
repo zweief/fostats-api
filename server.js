@@ -4,7 +4,9 @@ const colors = require("colors");
 const cors = require("cors");
 const morgan = require("morgan");
 
-const routesV1 = require("./api/v1/routes");
+const authRoutes = require("./api/v1/auth");
+const userRoutes = require("./api/v1/user");
+
 const { port, loggerFormat } = require("./config/config");
 
 const api = express();
@@ -24,13 +26,13 @@ if (process.env.NODE_ENV !== "test") {
 }
 
 // Routes
-api.use("/api/v1", routesV1);
+api.use("/api/v1", authRoutes);
+api.use("/api/v1", userRoutes);
 
 // 404 Error
 api.use((req, res, next) => {
-  const err = new Error("Not Found");
+  const err = new Error("Not Found.");
   err.status = 404;
-  err.message = "Not Found";
   next(err);
 });
 
